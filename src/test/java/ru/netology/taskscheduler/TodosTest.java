@@ -14,7 +14,7 @@ class TodosTest {
     Meeting meeting = new Meeting(
             555,
             "Выкатка 3й версии приложения",
-            "Приложение НетоБанка",
+            "Приложение НетоБанка подключить родителям",
             "Во вторник после обеда"
     );
 
@@ -48,6 +48,7 @@ class TodosTest {
         Task[] actual = todos.search("Хлеб");
         Assertions.assertArrayEquals(expected, actual);
     }
+
     @Test
     public void requestDoesNotRun() {
         Task[] expected = {};
@@ -58,7 +59,7 @@ class TodosTest {
     @Test
     public void addEmptyRequest() {
         Task[] expected = {};
-        Task[] actual = todos.search("     ");
+        Task[] actual = todos.search("   ");
         Assertions.assertArrayEquals(expected, actual);
     }
 
@@ -66,7 +67,21 @@ class TodosTest {
     public void addOneTaskSimpleTask() {
         Task[] expected = {simpleTask};
         Task[] actual = todos.search("Позвонить");
-        Assertions.assertArrayEquals(expected, actual);
+        Assertions.assertArrayEquals(expected, actual);  // находится одна задача.
+    }
+
+    @Test
+    public void requestShouldNotBeLocated() {
+        Task[] expected = {};
+        Task[] actual = todos.search("среда");
+        Assertions.assertArrayEquals(expected, actual);  // находится 0 задач, т.е. ни одна задача не подходит.
+    }
+    @Test
+    public void test() {
+        Task[] expected = {simpleTask, meeting};
+
+        Task[] actual = todos.search("родителям");
+        Assertions.assertArrayEquals(expected, actual); // находится несколько задач.
     }
 
 }
